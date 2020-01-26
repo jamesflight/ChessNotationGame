@@ -1,0 +1,17 @@
+{
+  "name": "ChessApp",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@ninjapixel/chess": "^1.0.0",
+    "chessboardjs": "^0.0.1",
+    "jquery": "^3.4.1",
+    "serve": "^11.3.0",
+    "webpack": "^4.41.5",
+    "yargs": "^15.1.0"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.3.10"
+  }
+}

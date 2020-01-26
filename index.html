@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Game to improve chess notation and chess memory skills</title>
+    <link rel="stylesheet" type="text/css" href="/css/chessboard.css">
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  </head>
+  <body>
+    <div class="container">
+      <div class="mt-5">
+        <h2>Game to improve chess notation and chess memory skills</h2>
+        <p class="mt-3">I suck at reading chess notation and remembering sequences of moves. Unsurpisingly, this has made it hard for me to get any better at chess 😂.</p>
+        <p>I've developed this game to help me get quicker at recalling chess notation and memorising sequences of moves.</p>
+        <hr>
+        <h3>The Game</h3>
+        <p>Press the "Start/Restart Sequence" button, and enter the sequence of moves you see on the board in standard chess notation e.g. "e4 e6 Qh5 g6".</p>
+        <button type="button" class="btn btn-success btn-lg d-block mx-auto mb-3" id="start_button">Start/Restart Sequence</button>
+        <div class="d-block mx-auto" style="width: 400px">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <label class="input-group-text" for="inputGroupSelect01">Length of move sequence</label>
+            </div>
+            <select class="custom-select" id="moves_select">
+              <option value="2" selected>2 moves</option>
+              <option value="3">3 moves</option>
+              <option value="4">4 moves</option>
+              <option value="5">5 moves</option>
+              <option value="6">6 moves</option>
+              <option value="7">7 moves</option>
+              <option value="8">8 moves</option>
+              <option value="9">9 moves</option>
+              <option value="10">10 moves</option>
+            </select>
+          </div>
+        </div>
+        
+        <div id="myBoard" class="d-block mx-auto" style="width: 400px"></div>
+        <div class="input-group input-group-lg d-block mx-auto "  style="width: 400px">
+          <input id="answer_input" type="text" class="form-control mt-3" placeholder="Enter the move sequence here" aria-label="Example text with button addon" aria-describedby="button-addon1">
+        </div>
+        <button id="checkanswer_button" type="button" class="btn btn-success btn-lg d-block mx-auto mb-3 mt-3">Check answer</button>
+        <button id="showanswer_button" type="button" class="btn btn-danger btn-lg d-block mx-auto mb-3">Show answer</button>
+        <button id="nextpuzzle_button" type="button" class="btn btn-info btn-lg d-block mx-auto mb-3">Next puzzle >></button>
+      </div>
+    </div>
+    <script type="text/javascript" src="/dist/main.js"></script>
+  </body>
+</html>
