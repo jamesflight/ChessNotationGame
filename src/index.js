@@ -18,10 +18,7 @@ render(state)
 let board = Chessboard('myBoard', {position: state.startPositionFen, showNotation: false})
 
 
-$("#start_button").click(() => {
-    handleAction({ type: START_BUTTON_CLICK_ACTION })
-    moveGame(state)
-})
+$("#start_button").click(() => handleAction({ type: START_BUTTON_CLICK_ACTION }))
 $("#moves_select").change((e) => handleAction({ type: SELECT_SEQUENCE_LENGTH_ACTION, value: e.currentTarget.value }))
 $("#checkanswer_button").click(() => handleAction({ type: CHECK_ANSWER_ACTION, value: $("#answer_input").val() }))
 $("#showanswer_button").click(() => handleAction({ type: SHOW_ANSWER_ACTION }))
@@ -29,9 +26,12 @@ $("#nextpuzzle_button").click(() => handleAction({ type: NEXT_PUZZLE_ACTION }))
 
 function handleAction(action) {
     switch (action.type) {
+        case START_BUTTON_CLICK_ACTION:
+            moveGame(state)
+            break
         case SELECT_SEQUENCE_LENGTH_ACTION:
             state = nextPuzzle(parseInt(action.value))
-            moveGame(state)
+            setupGame(state)
             break
         case CHECK_ANSWER_ACTION:
             console.log(action.value)
@@ -51,7 +51,6 @@ function handleAction(action) {
 }
 
 function render(state) {
-    console.log('state', state)
     $('#answer_input').removeClass('is-invalid')
     $('#answer_input').removeClass('is-valid')
     $('#answer_text').hide()
@@ -75,7 +74,6 @@ function nextPuzzle(lengthOfMoveSequence) {
     
     let gameStringSplit = gameString.split(' ')
     let startingMoveIndex = Math.floor(Math.random()*(gameStringSplit.length-lengthOfMoveSequence+1))
-    console.log(gameString, startingMoveIndex)
 
     let client = new Chess()
     for(let i = 0; i < startingMoveIndex; i++) {
@@ -93,6 +91,11 @@ function nextPuzzle(lengthOfMoveSequence) {
 
     let whiteAtBottom = Math.random() > 0.5
 
+    console.info('Full game:', gameStringSplit)
+    console.info('Starting move index:', startingMoveIndex)
+    console.info('Full history (chess client):', fullHistory)
+    console.info('Moves for chessboard js:', movesForChessboardJs)
+
     return {
         startPositionFen: fen,
         movesForChessboardJs,
@@ -100,19 +103,22 @@ function nextPuzzle(lengthOfMoveSequence) {
         isCurrentAnswerCorrect: false,
         isCurrentAnswerCheckedYet: false,
         isAnswerVisible: false,
-        whiteAtBottom: whiteAtBottom,
-        lengthOfMoveSequence: lengthOfMoveSequence,
+        whiteAtBottom,
+        lengthOfMoveSequence,
     }
 }
 
-async function moveGame(state) {
-    console.log(state)
+function setupGame(state) {
     if (state.whiteAtBottom) {
         board.orientation('white')
     } else {
         board.orientation('black')
     }
     board.position(state.startPositionFen)
+}
+
+async function moveGame(state) {
+    setupGame(state)
     for(let i = 0; i < state.movesForChessboardJs.length; i++) {
         await timeout(1000)
         board.move(state.movesForChessboardJs[i])
