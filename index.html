@@ -6,13 +6,23 @@
     <title>Game to improve chess notation and chess memory skills</title>
     <link rel="stylesheet" type="text/css" href="css/chessboard.css">
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <style type="text/css">
+    @media (max-width: 480px) { 
+      .mobile-only-padding {
+        padding-left: 25px;
+        padding-right: 25px;
+      }
+    }
+    </style>
   </head>
   <body>
     <div class="container">
       <div class="mt-5">
         <div class="row">
           <div class="col-md-4 offset-md-4">
-            <div id="myBoard" class="d-block mx-auto"></div>
+            <div class="mobile-only-padding">
+              <div id="myBoard" class="d-block mx-auto"></div>
+            </div>
             <div class="input-group input-group-lg d-block mx-auto">
               <input id="answer_input" type="text" class="form-control mt-3" placeholder="Enter the move sequence here" aria-label="Example text with button addon" aria-describedby="button-addon1">
               <div id="showanswer_button" class="invalid-feedback" style="cursor: pointer;">

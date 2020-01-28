@@ -28,6 +28,10 @@ $('#answer_input').keypress(function(event){
 $("#restart_button").click(() => handleAction({ type: RESTART_ACTION }))
 $("#showanswer_button").click(() => handleAction({ type: SHOW_ANSWER_ACTION }))
 $("#nextpuzzle_button").click(() => handleAction({ type: NEXT_PUZZLE_ACTION }))
+$('#answer_input').focus((e) => {
+    e.preventDefault();
+    e.target.focus({preventScroll: true});
+})
 
 function handleAction(action) {
     switch (action.type) {
