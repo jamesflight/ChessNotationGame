@@ -6,35 +6,36 @@ const Chess = require('@ninjapixel/chess')
 window.$ = $
 window.jQuery = $
 
-const START_BUTTON_CLICK_ACTION = "start_button_click"
+const RESTART_ACTION = "restart_action"
 const SELECT_SEQUENCE_LENGTH_ACTION = "select_sequence_length"
 const CHECK_ANSWER_ACTION = "check_answer"
 const SHOW_ANSWER_ACTION = "show_answer"
 const NEXT_PUZZLE_ACTION = "next_puzzle"
 
-
 let state = nextPuzzle(2)
 render(state)
 let board = Chessboard('myBoard', {position: state.startPositionFen, showNotation: false})
+moveGame(state)
 
 
-$("#start_button").click(() => handleAction({ type: START_BUTTON_CLICK_ACTION }))
 $("#moves_select").change((e) => handleAction({ type: SELECT_SEQUENCE_LENGTH_ACTION, value: e.currentTarget.value }))
-$("#checkanswer_button").click(() => handleAction({ type: CHECK_ANSWER_ACTION, value: $("#answer_input").val() }))
+$('#answer_input').keypress(function(event){
+    var keycode = (event.keyCode ? event.keyCode : event.which);
+    if(keycode == '13'){
+        handleAction({ type: CHECK_ANSWER_ACTION, value: $("#answer_input").val() })
+    }
+});
+$("#restart_button").click(() => handleAction({ type: RESTART_ACTION }))
 $("#showanswer_button").click(() => handleAction({ type: SHOW_ANSWER_ACTION }))
 $("#nextpuzzle_button").click(() => handleAction({ type: NEXT_PUZZLE_ACTION }))
 
 function handleAction(action) {
     switch (action.type) {
-        case START_BUTTON_CLICK_ACTION:
-            moveGame(state)
-            break
         case SELECT_SEQUENCE_LENGTH_ACTION:
             state = nextPuzzle(parseInt(action.value))
             setupGame(state)
             break
         case CHECK_ANSWER_ACTION:
-            console.log(action.value)
             state.isCurrentAnswerCheckedYet = true
             state.isCurrentAnswerCorrect = action.value == state.correctAnswer ? true : false
             break
@@ -43,6 +44,9 @@ function handleAction(action) {
             break
         case NEXT_PUZZLE_ACTION:
             state = nextPuzzle(state.lengthOfMoveSequence)
+            moveGame(state)
+            break
+        case RESTART_ACTION:
             moveGame(state)
             break
     }
@@ -55,6 +59,7 @@ function render(state) {
     $('#answer_input').removeClass('is-valid')
     $('#answer_text').hide()
     $('#answer_text').text(state.correctAnswer)
+    $('#showanswer_button').hide()
 
     if (state.isCurrentAnswerCheckedYet && state.isCurrentAnswerCorrect) {
         $('#answer_input').addClass('is-valid')
@@ -62,10 +67,12 @@ function render(state) {
 
     if (state.isCurrentAnswerCheckedYet && ! state.isCurrentAnswerCorrect) {
         $('#answer_input').addClass('is-invalid')
+        $('#showanswer_button').show()
     }
 
     if (state.isAnswerVisible) {
         $('#answer_text').show()
+        $('#showanswer_button').hide()
     }
 }
 

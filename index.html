@@ -10,16 +10,16 @@
   <body>
     <div class="container">
       <div class="mt-5">
-        <h2>Game to improve chess notation and chess memory skills</h2>
-        <p class="mt-3">I suck at reading chess notation and remembering sequences of moves. Unsurpisingly, this has made it hard for me to get any better at chess 😂.</p>
-        <p>I've developed this game to help me get quicker at recalling chess notation and memorising sequences of moves.</p>
-        <hr>
-        <h3>The Game</h3>
-        <p>Press the "Start/Restart Sequence" button, and enter the sequence of moves you see on the board in standard chess notation e.g. "e4 e6 Qh5 g6".</p>
-        
         <div class="row">
           <div class="col-md-4 offset-md-4">
-            <button type="button" class="btn btn-success btn-lg d-block mx-auto mb-3" id="start_button">Start/Restart Sequence</button>
+            <div id="myBoard" class="d-block mx-auto"></div>
+            <div class="input-group input-group-lg d-block mx-auto">
+              <input id="answer_input" type="text" class="form-control mt-3" placeholder="Enter the move sequence here" aria-label="Example text with button addon" aria-describedby="button-addon1">
+            </div>
+            <div id="answer_text" class="alert alert-warning mx-auto mt-3" style="display:none;"></div>
+            <button id="showanswer_button" type="button" class="btn btn-danger mx-auto mt-3" style="display: block;">Show answer</button>
+            <button id="restart_button" type="button" class="btn btn-warning d-block mx-auto mt-3 mb-3">Restart ↻</button> <button id="nextpuzzle_button" type="button" class="btn btn-info d-block mx-auto mt-3 mb-3">Next puzzle ⇒</button>
+            <hr>
             <div class="d-block mx-auto">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -38,18 +38,16 @@
                 </select>
               </div>
             </div>
-            
-            <div id="myBoard" class="d-block mx-auto"></div>
-            <div class="input-group input-group-lg d-block mx-auto">
-              <input id="answer_input" type="text" class="form-control mt-3" placeholder="Enter the move sequence here" aria-label="Example text with button addon" aria-describedby="button-addon1">
-            </div>
-            <div id="answer_text" class="alert alert-warning mx-auto mt-3" style="display:none;"></div>
-            <button id="checkanswer_button" type="button" class="btn btn-success btn-lg d-block mx-auto mb-3 mt-3">Check answer</button>
-            <button id="showanswer_button" type="button" class="btn btn-danger btn-lg d-block mx-auto mb-3">Show answer</button>
-            <button id="nextpuzzle_button" type="button" class="btn btn-info btn-lg d-block mx-auto mb-3">Next puzzle >></button>
           </div>
         </div>
       </div>
+      <h2 class="mt-5">Game to improve chess notation and chess memory skills</h2>
+      <p class="mt-3">I suck at reading chess notation and remembering sequences of moves. Unsurpisingly, this has made it hard for me to get any better at chess 😂.</p>
+      <p>I've developed this game to help me get quicker at recalling chess notation and memorising sequences of moves.</p>
+      <hr>
+      <h3>The Game</h3>
+      <p>Press the "Start/Restart Sequence" button, and enter the sequence of moves you see on the board in standard chess notation e.g. "e4 e6 Qh5 g6".</p>
+      
     </div>
     <script type="text/javascript" src="dist/main.js"></script>
   </body>
