@@ -15,10 +15,20 @@
             <div id="myBoard" class="d-block mx-auto"></div>
             <div class="input-group input-group-lg d-block mx-auto">
               <input id="answer_input" type="text" class="form-control mt-3" placeholder="Enter the move sequence here" aria-label="Example text with button addon" aria-describedby="button-addon1">
+              <div id="showanswer_button" class="invalid-feedback" style="cursor: pointer;">
+                Show answer
+              </div>
             </div>
             <div id="answer_text" class="alert alert-warning mx-auto mt-3" style="display:none;"></div>
-            <button id="showanswer_button" type="button" class="btn btn-danger mx-auto mt-3" style="display: block;">Show answer</button>
-            <button id="restart_button" type="button" class="btn btn-warning d-block mx-auto mt-3 mb-3">Restart ↻</button> <button id="nextpuzzle_button" type="button" class="btn btn-info d-block mx-auto mt-3 mb-3">Next puzzle ⇒</button>
+
+            <div class="row">
+              <div class="col-md-6">
+                <button id="restart_button" type="button" class="btn btn-warning d-block mx-auto mt-3 mb-3 w-100">Restart ↻</button>
+              </div>
+              <div class="col-md-6">
+                 <button id="nextpuzzle_button" type="button" class="btn btn-info d-block mx-auto mt-3 mb-3 w-100">Next puzzle ⇒</button>
+              </div>
+            </div>
             <hr>
             <div class="d-block mx-auto">
               <div class="input-group mb-3">
