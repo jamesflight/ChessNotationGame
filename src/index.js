@@ -13,6 +13,7 @@ const SHOW_ANSWER_ACTION = "show_answer"
 const NEXT_PUZZLE_ACTION = "next_puzzle"
 const MOVE_GAME_COMPLETE = 'move_game_complete'
 
+$('#answer_input').focus()
 let state = nextPuzzle(2)
 render(state)
 let board = Chessboard('myBoard', {position: state.startPositionFen, showNotation: false})
@@ -60,6 +61,7 @@ function handleAction(action) {
         case RESTART_ACTION:
             state.isGameRunning = true
             moveGame(state)
+            refocusInput()
             break
         case MOVE_GAME_COMPLETE:
             state.isGameRunning = false
@@ -99,6 +101,10 @@ function render(state) {
 
 function clearAnswer() {
     $('#answer_input').val("")
+}
+
+function refocusInput() {
+    $('#answer_input').focus()
 }
 
 function nextPuzzle(lengthOfMoveSequence) {
