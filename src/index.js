@@ -11,11 +11,11 @@ const SELECT_SEQUENCE_LENGTH_ACTION = "select_sequence_length"
 const CHECK_ANSWER_ACTION = "check_answer"
 const SHOW_ANSWER_ACTION = "show_answer"
 const NEXT_PUZZLE_ACTION = "next_puzzle"
+const MOVE_GAME_COMPLETE = 'move_game_complete'
 
 let state = nextPuzzle(2)
 render(state)
 let board = Chessboard('myBoard', {position: state.startPositionFen, showNotation: false})
-moveGame(state)
 
 
 $("#moves_select").change((e) => handleAction({ type: SELECT_SEQUENCE_LENGTH_ACTION, value: e.currentTarget.value }))
@@ -25,7 +25,7 @@ $('#answer_input').keypress(function(event){
         handleAction({ type: CHECK_ANSWER_ACTION, value: $("#answer_input").val() })
     }
 });
-$("#restart_button").click(() => handleAction({ type: RESTART_ACTION }))
+$("#reset_overlay_button").click(() => handleAction({ type: RESTART_ACTION }))
 $("#showanswer_button").click(() => handleAction({ type: SHOW_ANSWER_ACTION }))
 $("#nextpuzzle_button").click(() => handleAction({ type: NEXT_PUZZLE_ACTION }))
 $('#answer_input').focus((e) => {
@@ -42,16 +42,27 @@ function handleAction(action) {
         case CHECK_ANSWER_ACTION:
             state.isCurrentAnswerCheckedYet = true
             state.isCurrentAnswerCorrect = action.value == state.correctAnswer ? true : false
+            if (state.isCurrentAnswerCorrect) {
+                setTimeout(() => {
+                    handleAction({type: NEXT_PUZZLE_ACTION})
+                }, 1000)
+            }
             break
         case SHOW_ANSWER_ACTION:
             state.isAnswerVisible = true
             break
         case NEXT_PUZZLE_ACTION:
             state = nextPuzzle(state.lengthOfMoveSequence)
+            state.isGameRunning = true
             moveGame(state)
+            clearAnswer()
             break
         case RESTART_ACTION:
+            state.isGameRunning = true
             moveGame(state)
+            break
+        case MOVE_GAME_COMPLETE:
+            state.isGameRunning = false
             break
     }
 
@@ -59,11 +70,13 @@ function handleAction(action) {
 }
 
 function render(state) {
+    console.log(state)
     $('#answer_input').removeClass('is-invalid')
     $('#answer_input').removeClass('is-valid')
     $('#answer_text').hide()
     $('#answer_text').text(state.correctAnswer)
     $('#showanswer_button').hide()
+    $('#reset_overlay_button').show()
 
     if (state.isCurrentAnswerCheckedYet && state.isCurrentAnswerCorrect) {
         $('#answer_input').addClass('is-valid')
@@ -78,6 +91,14 @@ function render(state) {
         $('#answer_text').show()
         $('#showanswer_button').hide()
     }
+
+    if (state.isGameRunning) {
+        $('#reset_overlay_button').hide()
+    }
+}
+
+function clearAnswer() {
+    $('#answer_input').val("")
 }
 
 function nextPuzzle(lengthOfMoveSequence) {
@@ -114,6 +135,7 @@ function nextPuzzle(lengthOfMoveSequence) {
         isCurrentAnswerCorrect: false,
         isCurrentAnswerCheckedYet: false,
         isAnswerVisible: false,
+        isGameRunning: false,
         whiteAtBottom,
         lengthOfMoveSequence,
     }
@@ -129,6 +151,7 @@ function setupGame(state) {
 }
 
 async function moveGame(state) {
+    setTimeout(() => handleAction({type: MOVE_GAME_COMPLETE}), 1000 * (state.lengthOfMoveSequence + 1))
     setupGame(state)
     for(let i = 0; i < state.movesForChessboardJs.length; i++) {
         await timeout(1000)

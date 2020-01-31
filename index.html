@@ -13,6 +13,21 @@
         padding-right: 25px;
       }
     }
+    .board {
+      position: relative;
+    }
+    .restart-overlay {
+      position:absolute;
+      width: 100%;
+      height: 100%;
+      background: grey;
+      opacity: 70%;
+      top: 0;
+      font-size: 40px;
+      padding-top:40%;
+      text-align: center;
+      cursor: pointer;
+    }
     </style>
   </head>
   <body>
@@ -20,11 +35,12 @@
       <div class="mt-5">
         <div class="row">
           <div class="col-md-4 offset-md-4">
-            <div class="mobile-only-padding">
+            <div class="mobile-only-padding board">
               <div id="myBoard" class="d-block mx-auto"></div>
+              <div id="reset_overlay_button" class="restart-overlay">↻</div>
             </div>
             <div class="input-group input-group-lg d-block mx-auto">
-              <input id="answer_input" type="text" class="form-control mt-3" placeholder="Enter the move sequence here" aria-label="Example text with button addon" aria-describedby="button-addon1">
+              <input id="answer_input" type="text" class="form-control mt-3" placeholder="Enter the move sequence here" autocapitalize="none">
               <div id="showanswer_button" class="invalid-feedback" style="cursor: pointer;">
                 Show answer
               </div>
@@ -33,10 +49,7 @@
 
             <div class="row">
               <div class="col-md-6">
-                <button id="restart_button" type="button" class="btn btn-warning d-block mx-auto mt-3 mb-3 w-100">Restart ↻</button>
-              </div>
-              <div class="col-md-6">
-                 <button id="nextpuzzle_button" type="button" class="btn btn-info d-block mx-auto mt-3 mb-3 w-100">Next puzzle ⇒</button>
+                 <button id="nextpuzzle_button" type="button" class="btn btn-info d-block mx-auto mt-3 mb-3 w-100">Skip puzzle</button>
               </div>
             </div>
             <hr>
